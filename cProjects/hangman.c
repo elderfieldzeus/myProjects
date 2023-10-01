@@ -4,7 +4,7 @@
 int main(){
 	
 	char hangman[]= "zeus";
-	char progress[]= {'_','_','_','_'};
+	char progress[]= {'_','_','_','_','\0'};
 	char guess;
 	
 	int a=0;
