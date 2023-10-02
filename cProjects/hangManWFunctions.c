@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 typedef struct{
     char word[20];
@@ -103,6 +104,8 @@ void askForGuess(Hang *man){
     scanf(" %c", &man->guess);
     int i, length = strlen(man->word); 
     man->checker = 0;
+
+    man->guess = tolower(man->guess);
 
     for(i=0; i<length; i++){
         if(man->word[i] == man->guess){
