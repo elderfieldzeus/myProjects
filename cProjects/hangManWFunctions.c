@@ -8,7 +8,6 @@ typedef struct{
     char guess;
     char status[20];
     int lives;
-    int guesses;
     int start;
     int valid;
     int difficulty;
