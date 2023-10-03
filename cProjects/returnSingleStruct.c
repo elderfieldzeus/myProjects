@@ -22,6 +22,23 @@ int main(){
 }
 
 PERSON getStruct(){
+    PERSON Per;
+
+    printf("Enter name: ");
+    scanf(" %99[^\n]", Per.name);
+    printf("Enter age: ");
+    scanf("%d", &Per.age);
+    printf("Enter height: ");
+    scanf("%f", &Per.height);
+
+    return Per;
+}
+
+
+/*
+CAN ALSO BE THIS ONE:
+
+PERSON getStruct(){
     PERSON Per, *pers;
     pers = &Per;
 
@@ -34,3 +51,4 @@ PERSON getStruct(){
 
     return *pers;
 }
+*/
