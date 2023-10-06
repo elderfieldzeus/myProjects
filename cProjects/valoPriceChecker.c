@@ -67,7 +67,7 @@ Stats *listOfGuns(){
  
 	strcpy(bang[7].gunName, "bucky");
 	bang[7].price = 850;
-	strcpy(bang[7].gunName, "judge");
+	strcpy(bang[8].gunName, "judge");
 	bang[8].price = 1850;
  
 	for (int i=7; i<=8; i++){
@@ -122,7 +122,7 @@ void checkGun(char *gun){
 			printf("Gun Type: %s\n", bang[i].type);
             bang[i].gunName[0] = toupper(bang[i].gunName[0]);
 			printf("Gun Name: %s\n", bang[i].gunName);
-			printf("Price: %d Credits\n", bang[i].price);
+			printf("Price: %d Credits", bang[i].price);
             free(bang);
 			return;
 		}
