@@ -19,8 +19,7 @@ void thankYou();
 int main(){
 	int again;
 	int size = getSize();
-	Data *dat;
-	dat = getData(size);
+	Data *dat = getData(size);
 	do{	
 		findData(dat, size);
 		again = searchAgain();
