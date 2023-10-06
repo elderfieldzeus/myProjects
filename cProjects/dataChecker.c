@@ -14,6 +14,7 @@ int getSize();
 Data *getData(int size);
 void findData(Data *dat, int size);
 int searchAgain();
+void thankYou();
  
 int main(){
 	int again;
@@ -24,6 +25,7 @@ int main(){
 		findData(dat, size);
 		again = searchAgain();
 	}while(again != 0);
+	thankYou();
 	free(dat);
 	return 0;	
 }	
@@ -79,4 +81,8 @@ int searchAgain(){
 	else
         system("cls");
 		return 0;
+}
+
+void thankYou(){
+	printf("THANK YOU FOR USING!!!");
 }
