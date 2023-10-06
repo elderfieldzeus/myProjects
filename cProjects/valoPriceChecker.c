@@ -110,6 +110,7 @@ Stats *listOfGuns(){
 }
  
 void checkGun(char *gun){
+    system("cls");
 	Stats *bang = listOfGuns();
  
 	for(int i=0; gun[i] != '\0'; i++){
@@ -118,7 +119,6 @@ void checkGun(char *gun){
  
 	for(int i=0; i<numOfGuns; i++){
 		if(!strcmp(gun, bang[i].gunName)){
-			system("cls");
 			printf("Gun Type: %s\n", bang[i].type);
             bang[i].gunName[0] = toupper(bang[i].gunName[0]);
 			printf("Gun Name: %s\n", bang[i].gunName);
