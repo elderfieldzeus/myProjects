@@ -51,7 +51,7 @@ Stats *listOfGuns(){
 	bang[3].price = 500;
 	strcpy(bang[4].gunName, "sheriff");
 	bang[4].price = 800;
- 
+ 	
 	for (int i=0; i<=4; i++){
 		strcpy(bang[i].type, "Pistol");
 	}
