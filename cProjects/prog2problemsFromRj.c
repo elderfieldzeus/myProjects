@@ -82,7 +82,7 @@ void insertArrayStart(Person *per){
     printf("Enter your inserted name: ");
     scanf(" %19[^\n]", temp);
 
-    for(int i = per->size-1; i>=0; i--){
+    for(int i = per->size-2; i>=0; i--){
         strcpy(per->name[i+1],per->name[i]);
     }
     strcpy(per->name[0], temp);
@@ -90,6 +90,12 @@ void insertArrayStart(Person *per){
 
 void deleteArray(Person *per){
     int index;
+    if(per->size == 0){
+        printf("\033[H\033[J");
+        printf("ARRAY IS EMPTY. CANNOT DELETE ANYMORE!");
+        return;
+    }
+
     do{
         printf("\033[H\033[J");
         printf("Enter array you choose to delete (0-index): ");
@@ -106,6 +112,11 @@ void deleteArray(Person *per){
 
 void updateArray(Person *per){
     int choice;
+    if(per->size == 0){
+        printf("\033[H\033[J");
+        printf("ARRAY IS EMPTY. CANNOT UPDATE ANYMORE!");
+        return;
+    }
     do{
         printf("\033[H\033[J");
         printf("Enter location you choose to update (0-index): ");
@@ -117,7 +128,8 @@ void updateArray(Person *per){
 }
 
 void printAll(Person *per){
-    printf("\033[H\033[J");
+    if(per->size > 0)
+        printf("\033[H\033[J");
     for(int i = 0; i<per->size; i++){
         printf("Name %d: %s\n", i+1, per->name[i]);
     }
