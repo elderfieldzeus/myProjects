@@ -96,10 +96,10 @@ void deleteArray(Person *per){
         scanf("%d", &index);
     }while(index<0 || index >=per->size);
     
-    for(int i = index; i<per->size; i++){
+    for(int i = index; i<(per->size)-1; i++){
         strcpy(per->name[i], per->name[i+1]);
     }
-    strcpy(per->name[per->size-1],NULL);
+    free(per->name[per->size-1]);
     per->size--;
     per->name = realloc(per->name, sizeof(char*)*per->size);
 }
