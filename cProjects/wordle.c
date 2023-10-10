@@ -59,6 +59,7 @@ Wordle getStruct(){
 
 int homePage(){
     char start[5];
+    printf("\033[H\033");
     printf("WELCOME TO HONEY ALISON'S WORDLE!!!\n");
     printf("   Type \"play\" to start: ");
     scanf(" %s", start);
