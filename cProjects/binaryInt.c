@@ -16,7 +16,7 @@ int main(){
             for(int i = 0; i<times; i++){
                 add*=10;
             }
-            binary+=1*add;
+            binary+=add;
         }
         times++;   
     }
