@@ -89,8 +89,11 @@ void sortNames(PERSON *person, int *pSize){
 
 int compareOrder(const char name[], const char namePlusOne[]){
     for(int i = 0; name[i] != '\0' && namePlusOne[i] != '\0'; i++){
-        if(tolower(name[i]) > tolower(namePlusOne[i])){
+        if(name[i] > namePlusOne[i]){
             return 1;
+        }
+        else if(name[i] != namePlusOne[i]){
+            return 0;
         }
     }
     if(strlen(name) > strlen(namePlusOne))
