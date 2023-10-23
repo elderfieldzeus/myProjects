@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 typedef struct{
     char name[100];
@@ -10,6 +11,9 @@ typedef struct{
 
 PERSON *getPerson();
 void wouldYouLike(PERSON *person, int *pSize);
+void formalize(char *formal);
+void sortNames(PERSON *person, int *pSize);
+int compareOrder(const char name[], const char namePlusOne[]);
 void addPerson(PERSON *person, int *pSize);
 int checkName(PERSON *person, char nameToCheck[], int *pSize);
 void searchPerson(PERSON *person, int *pSize);
@@ -29,6 +33,7 @@ PERSON *getPerson(){
     printf("\033[H\033[J");
     printf("Enter name: ");
     scanf(" %99[^\n]", person[0].name);
+    formalize(person[0].name);
     printf("Enter age: ");
     scanf("%d", &person[0].age);
     printf("Enter Phone Number: ");
@@ -38,6 +43,7 @@ PERSON *getPerson(){
 
 void wouldYouLike(PERSON *person, int *pSize){
     start:
+        sortNames(person, pSize);
         int option;
         printf("\nSelect option:\n");
         printf("[1] Add another person.\n");
@@ -58,6 +64,40 @@ void wouldYouLike(PERSON *person, int *pSize){
     }
 }
 
+void formalize(char *formal){
+    for(int j = 0; formal[j] != '\0'; j++){
+        if(j == 0 || formal[j-1] == ' '){
+            formal[j] = toupper(formal[j]);
+        }
+        else{
+            formal[j] = tolower(formal[j]);
+        }
+    }
+}
+
+void sortNames(PERSON *person, int *pSize){
+    for(int i = 0; i<(*pSize)-1; i++){
+        for(int j = 0; j<(*pSize)-1-i; j++){
+            if(compareOrder(person[j].name, person[j+1].name)){
+                PERSON temp = person[j];
+                person[j] = person[j+1];
+                person[j+1] = temp;
+            }
+        }
+    }
+}
+
+int compareOrder(const char name[], const char namePlusOne[]){
+    for(int i = 0; name[i] != '\0' && namePlusOne[i] != '\0'; i++){
+        if(tolower(name[i]) > tolower(namePlusOne[i])){
+            return 1;
+        }
+    }
+    if(strlen(name) > strlen(namePlusOne))
+        return 1;
+    return 0;
+}
+
 void addPerson(PERSON *person, int *pSize){
     char name[100];
     printf("Enter name: ");
@@ -68,6 +108,7 @@ void addPerson(PERSON *person, int *pSize){
     }
     (*pSize)++;
     person = realloc(person, sizeof(PERSON)*(*pSize));
+    formalize(name);
     strcpy(person[*pSize-1].name, name);
     printf("Enter age: ");
     scanf("%d", &person[*pSize-1].age);
@@ -91,6 +132,7 @@ void searchPerson(PERSON *person, int *pSize){
     start:
         printf("Enter name you would like to search: ");
         scanf(" %99[^\n]", search);
+        formalize(search);
         for(int i = 0; i < *pSize; i++){
             if(strcmp(search, person[i].name) == 0){
                 printf("\nName: %s\n", person[i].name);
@@ -115,6 +157,7 @@ void deletePerson(PERSON *person, int *pSize){
         printf("NAME NOT FOUND");
         goto exit;
     }
+    formalize(delete);
     for(int i = 0; i < *pSize; i++){
         if(strcmp(delete, person[i].name) == 0){
             index = i;
