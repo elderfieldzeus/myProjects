@@ -8,8 +8,8 @@ int main(){
     int n;
     printf("Enter the size of the matrix: ");
     scanf("%d", &n);
-    int arr[n][n], count = 1, i = 0, j = 0, firstRow = 0, lastRow = n-1, firstCol = 0, lastCol = n-1,
-        rowCol = RIGHT;
+    int arr[n][n], count = 1, i = 0, j = 0, firstRow = 0, lastRow = n-1, firstCol = 0, lastCol = n-1;
+    enum direction rowCol = RIGHT;
 
     while (count <= n*n){
         arr[i][j] = count;
