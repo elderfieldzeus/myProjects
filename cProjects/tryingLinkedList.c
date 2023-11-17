@@ -24,11 +24,11 @@ int main(){
 }
 
 int askForSize(){
-    int size = 0;
+    int size;
     do{
-        if(size < 0) printf("INVALID INPUT");
         printf("Enter number of nodes: ");
         scanf("%d", &size);
+        if(size <= 0) printf("INVALID INPUT\n");
     }while(size <= 0);
     return size;
 }
