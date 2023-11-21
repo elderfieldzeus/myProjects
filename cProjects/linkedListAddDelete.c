@@ -133,7 +133,7 @@ void sortNode(NODE *mainNode){ //FIX THIS ARGHH... EDIT: FINALLY FIXED BUT NOT E
     }
 
     exit:
-    printf("\nNODE SORTED\n");
+    printf("\nNODES SORTED\n");
     options(mainNode);
 }
 
