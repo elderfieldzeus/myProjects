@@ -13,6 +13,7 @@ void options(NODE *mainNode);
 void addNode(NODE *mainNode);
 void deleteNode(NODE *mainNode);
 void sortNode(NODE *mainNode);
+void swapNodes(NODE *mainNode, NODE *tail, NODE *head);
 void freeAll(NODE *mainNode);
 
 int main() {
@@ -120,39 +121,92 @@ void deleteNode(NODE *mainNode){
 }
 
 void sortNode(NODE *mainNode){ //FIX THIS ARGHH
-    NODE *whole = mainNode;
-    NODE *left = NULL;
-    NODE *right = NULL;
-    NODE *oldWhole = NULL;
-    while(whole->next != NULL){
-        for(left = whole, right = whole->next; right != NULL; left = left->next, right = right->next){
-            if(left->value > right->value){
-                NODE *temp = right->next;
-                right->next = left;
-                left->next = temp;
-                if(oldWhole == NULL){
-                    mainNode = right;
-                }
-                else{
-                    oldWhole->next = right;
-                }
-                left = right;
-                right = left->next;
-            }
+    NODE *head = NULL;
+    NODE *tail = NULL;
 
-            if(oldWhole == NULL){
-                oldWhole = left;
-            }
-            else{
-                oldWhole = oldWhole->next;
+    for(head = mainNode; head->next != NULL; head = head->next){
+        int base = head->value;
+        for(tail = head->next; tail != NULL; tail = tail->next){
+            if(tail->value < base){
+                base = tail->value;
+                printf("SWAP %d & %d\n", head->value, tail->value);
+                swapNodes(mainNode, tail, head);
+                printf("MV = %d\n", mainNode->value);
+                printf("T = %d\n", tail->value);
+                printf("H = %d\n", head->value);
             }
         }
-        oldWhole = whole;
-        whole = whole->next;
+    }
+    printf("NODE SORTED");
+    options(mainNode);
+}
+
+void swapNodes(NODE *mainNode, NODE *tail, NODE *head){
+    NODE *currentX, *prevX, *currentY, *prevY;
+    currentX = mainNode;
+    prevX = NULL;
+    while(currentX != NULL && currentX != head){
+        prevX = currentX;
+        currentX = currentX->next;
     }
 
-    printf("NODE SORTED\n");
-    options(mainNode);
+    currentY = mainNode;
+    prevY = NULL;
+    while(currentY != NULL && currentY != tail){
+        prevY = currentY;
+        currentY = currentY->next;
+    }
+
+    if(prevX == NULL){
+        if(currentY->next == NULL){
+            NODE *tempX = currentX->next;
+            prevY->next = currentX;
+            currentY->next = tempX;
+            currentX->next = NULL;
+            mainNode = currentY;
+        }
+        else{
+            if(currentY == currentX->next){
+                NODE *tempX = currentX;
+                NODE *tempY = currentY->next;
+                mainNode = currentY;
+                mainNode->next = tempX;
+                tempX->next = tempY;
+            }
+            else{
+                NODE *tempX = currentX->next;
+                NODE *tempY = currentY->next;
+                prevY->next = currentX;
+                currentY->next = tempX;
+                currentX->next = tempY;
+                mainNode = currentY;
+            }
+        }
+    }
+    else{
+        if(currentY->next == NULL){
+            NODE* tempX = currentX->next;
+            prevX->next = currentY;
+            prevY->next = currentX;
+            currentY->next = tempX;
+            currentX->next = NULL;
+        }
+        else{
+            if(currentY == currentX->next){
+                NODE *temp = currentY->next;
+                prevX->next = currentY;
+                currentY->next = currentX;
+                currentX->next = temp;
+            }
+            else{
+                NODE* tempX = currentX->next, *tempY = currentY->next;
+                prevX->next = currentY;
+                prevY->next = currentX;
+                currentY->next = tempX;
+                currentX->next = tempY;
+            }
+        }
+    }
 }
 
 void freeAll(NODE *mainNode){
