@@ -13,7 +13,7 @@ void options(NODE *mainNode);
 void addNode(NODE *mainNode);
 void deleteNode(NODE *mainNode);
 void sortNode(NODE *mainNode);
-void swapNodes(NODE *mainNode, NODE *tail, NODE *head);
+void swapNodes(NODE **mainNode, NODE **tail, NODE **head);
 void freeAll(NODE *mainNode);
 
 int main() {
@@ -120,39 +120,35 @@ void deleteNode(NODE *mainNode){
     options(mainNode);  
 }
 
-void sortNode(NODE *mainNode){ //FIX THIS ARGHH
+void sortNode(NODE *mainNode){ //FIX THIS ARGHH... EDIT: FINALLY FIXED BUT NOT EFFICIENT
     NODE *head = NULL;
     NODE *tail = NULL;
 
     for(head = mainNode; head->next != NULL; head = head->next){
-        int base = head->value;
         for(tail = head->next; tail != NULL; tail = tail->next){
-            if(tail->value < base){
-                base = tail->value;
-                printf("SWAP %d & %d\n", head->value, tail->value);
-                swapNodes(mainNode, tail, head);
-                printf("MV = %d\n", mainNode->value);
-                printf("T = %d\n", tail->value);
-                printf("H = %d\n", head->value);
+            if(tail->value < head->value){
+                swapNodes(&mainNode, &tail, &head);
             }
         }
     }
-    printf("NODE SORTED");
+
+    exit:
+    printf("\nNODE SORTED\n");
     options(mainNode);
 }
 
-void swapNodes(NODE *mainNode, NODE *tail, NODE *head){
+void swapNodes(NODE **mainNode, NODE **tail, NODE **head){
     NODE *currentX, *prevX, *currentY, *prevY;
-    currentX = mainNode;
+    currentX = *mainNode;
     prevX = NULL;
-    while(currentX != NULL && currentX != head){
+    while(currentX != NULL && currentX != *head){
         prevX = currentX;
         currentX = currentX->next;
     }
 
-    currentY = mainNode;
+    currentY = *mainNode;
     prevY = NULL;
-    while(currentY != NULL && currentY != tail){
+    while(currentY != NULL && currentY != *tail){
         prevY = currentY;
         currentY = currentY->next;
     }
@@ -163,14 +159,14 @@ void swapNodes(NODE *mainNode, NODE *tail, NODE *head){
             prevY->next = currentX;
             currentY->next = tempX;
             currentX->next = NULL;
-            mainNode = currentY;
+            *mainNode = currentY;
         }
         else{
             if(currentY == currentX->next){
                 NODE *tempX = currentX;
                 NODE *tempY = currentY->next;
-                mainNode = currentY;
-                mainNode->next = tempX;
+                *mainNode = currentY;
+                (*mainNode)->next = tempX;
                 tempX->next = tempY;
             }
             else{
@@ -179,17 +175,24 @@ void swapNodes(NODE *mainNode, NODE *tail, NODE *head){
                 prevY->next = currentX;
                 currentY->next = tempX;
                 currentX->next = tempY;
-                mainNode = currentY;
+                *mainNode = currentY;
             }
         }
     }
     else{
         if(currentY->next == NULL){
-            NODE* tempX = currentX->next;
-            prevX->next = currentY;
-            prevY->next = currentX;
-            currentY->next = tempX;
-            currentX->next = NULL;
+            if(currentY == currentX->next){
+                prevX->next = currentY;
+                currentY->next = currentX;
+                currentX->next = NULL;
+            }
+            else{
+                NODE* tempX = currentX->next;
+                prevX->next = currentY;
+                prevY->next = currentX;
+                currentY->next = tempX;
+                currentX->next = NULL;
+            }
         }
         else{
             if(currentY == currentX->next){
@@ -207,6 +210,11 @@ void swapNodes(NODE *mainNode, NODE *tail, NODE *head){
             }
         }
     }
+
+    NODE *temp = *tail;
+    *tail = *head;
+    *head = temp;
+
 }
 
 void freeAll(NODE *mainNode){
