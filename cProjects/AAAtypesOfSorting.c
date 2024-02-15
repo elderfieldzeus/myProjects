@@ -113,17 +113,31 @@ void selectionSort(int *array){
     printIt(array);
 }
 
-void insertionSort(int *array){
-    //INSERTION ALGORITHM BELOW
-    for(int i = 1; i<5; i++){
-        int key = array[i];
-        int j = i-1;
+// void insertionSort(int *array){
+//     //INSERTION ALGORITHM BELOW
+//     for(int i = 1; i<5; i++){
+//         int key = array[i];
+//         int j = i-1;
 
-        while(j >= 0 && array[j] > key){
-            array[j+1] = array[j];
-            j = j-1;
+//         while(j >= 0 && array[j] > key){
+//             array[j+1] = array[j];
+//             j = j-1;
+//         }
+//         array[j+1] = key;
+//     }
+
+//     //PRINT
+//     printf("\nINSERTION SORT: [");
+//     printIt(array);
+// }
+
+void insertionSort(int *array) {
+    for(int i = 1; i < 5; i++) {
+        for(int j = i; j > 0 && array[j] < array[j - 1]; j--) {
+            int temp = array[j];
+            array[j] = array[j - 1];
+            array[j - 1] = temp;
         }
-        array[j+1] = key;
     }
 
     //PRINT
